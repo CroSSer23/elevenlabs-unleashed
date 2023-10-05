@@ -164,12 +164,10 @@ def create_account():
     submit_button = driver.find_element(By.XPATH, "//button[@type='submit']")
     submit_button.click()
 
-    account_button = WebDriverWait(driver, 10).until(lambda driver: driver.find_element(By.XPATH, "//button[@data-testid='user-menu-button']"))
+    account_button = wait.until(lambda driver: driver.find_element(By.XPATH, "//button[@data-testid='user-menu-button']"))
     account_button.click()
 
-    menu_items_container = WebDriverWait(driver, 10).until(lambda driver: driver.find_element(By.XPATH, "//div[starts-with(@id, 'headlessui-menu-items')]"))
-    id = "headlessui-menu-item-P0-" + str(int(menu_items_container.get_attribute("id").split("-")[-1]) + 1)
-    profile_button = menu_items_container.find_element(By.ID, id)
+    profile_button = wait.until(lambda driver: driver.find_element(By.XPATH, "//a[contains(@class,'flex items-center')]"))
     profile_button.click()
     
     api_key_input = WebDriverWait(driver, 10).until(lambda driver: driver.find_element(By.XPATH, "//input[@type='password']"))

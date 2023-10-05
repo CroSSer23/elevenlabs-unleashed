@@ -116,7 +116,7 @@ def create_account():
     options.add_argument("--window-size=1440,1280")
     options.add_extension(HEKT_EXT_PATH)
     driver = webdriver.Chrome(options=options)
-
+    wait = WebDriverWait(driver, 45)
     driver.get(SIGNUP_URL)
 
     email = _generate_email()
@@ -125,15 +125,15 @@ def create_account():
     # cookie_button = WebDriverWait(driver, 10).until(lambda driver: driver.find_element(By.ID, "CybotCookiebotDialogBodyButtonAccept"))
     # cookie_button.click()
 
-    email_input = WebDriverWait(driver, 10).until(lambda driver: driver.find_element(By.NAME, "email"))
+    email_input = wait.until(lambda driver: driver.find_element(By.NAME, "email"))
     email_input.send_keys(email)
 
     password_input = driver.find_element(By.NAME, "password")
     password_input.send_keys(password)
 
-    captcha_iframe = WebDriverWait(driver, 10).until(lambda driver: driver.find_element(By.XPATH, "//iframe[@tabindex='0']"))
+    captcha_iframe = wait.until(lambda driver: driver.find_element(By.XPATH, "//iframe[@tabindex='0']"))
     driver.switch_to.frame(captcha_iframe)
-    captcha_checkbox = WebDriverWait(driver, 10).until(lambda driver: driver.find_element(By.ID, "checkbox"))
+    captcha_checkbox = wait.until(lambda driver: driver.find_element(By.ID, "checkbox"))
     # Wait for aria-checked to be true
     t0 = monotonic()
     while captcha_checkbox.get_attribute("aria-checked") == "false":
@@ -151,10 +151,10 @@ def create_account():
     
     driver.get(link)
     
-    close_button = WebDriverWait(driver, 10).until(lambda driver: driver.find_element(By.XPATH, "//button[text()='Close']"))
+    close_button = wait.until(lambda driver: driver.find_element(By.XPATH, "//button[text()='Close']"))
     close_button.click()
 
-    email_input = WebDriverWait(driver, 10).until(lambda driver: driver.find_element(By.XPATH, "//input[@type='email']"))
+    email_input = wait.until(lambda driver: driver.find_element(By.XPATH, "//input[@type='email']"))
     email_input.send_keys(email)
 
     password_input = driver.find_element(By.XPATH, "//input[@type='password']")
